@@ -1,0 +1,4 @@
+{
+  "JWT_PRIVATE_KEY": "test",
+  "DB_CONN": "mongodb://localhost/car-rental-test"
+}

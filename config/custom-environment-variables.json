@@ -1,0 +1,4 @@
+{
+  "JWT_PRIVATE_KEY": "JWT_PRIVATE_KEY",
+  "DB_CONN": "DB_CONN"
+}
