@@ -4,6 +4,7 @@ const { Brand } = require("../../models/brand");
 const { User } = require("../../models/user");
 
 describe("/api/brands", () => {
+  const path = "/api/brands";
   let server;
 
   beforeEach(() => {
@@ -22,7 +23,7 @@ describe("/api/brands", () => {
         { name: "brand2" }
       ]);
 
-      const res = await request(server).get("/api/brands");
+      const res = await request(server).get(path);
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
       expect(res.body.some(g => g.name === "brand1")).toBeTruthy();
@@ -32,13 +33,13 @@ describe("/api/brands", () => {
 
   describe("GET /:id", () => {
     it("should return 400 if the id is not valid", async () => {
-      const res = await request(server).get("/api/brands/1234");
+      const res = await request(server).get(`${path}/1234`);
       expect(res.status).toBe(400);
     });
 
     it("should return 404 if the brand with the given id does not exist", async () => {
       const id = mongoose.Types.ObjectId();
-      const res = await request(server).get(`/api/brands/${id}`);
+      const res = await request(server).get(`${path}/${id}`);
       expect(res.status).toBe(404);
     });
 
@@ -46,7 +47,7 @@ describe("/api/brands", () => {
       const brand = new Brand({ name: "brand1" });
       await brand.save();
 
-      const res = await request(server).get(`/api/brands/${brand._id}`);
+      const res = await request(server).get(`${path}/${brand._id}`);
       expect(res.status).toBe(200);
       expect(res.body).toHaveProperty("name", brand.name);
     });
@@ -58,7 +59,7 @@ describe("/api/brands", () => {
 
     const exec = () => {
       return request(server)
-        .post("/api/brands")
+        .post(path)
         .set("x-auth-token", token)
         .send({ name });
     };
@@ -124,7 +125,7 @@ describe("/api/brands", () => {
 
     const exec = () => {
       return request(server)
-        .put(`/api/brands/${id}`)
+        .put(`${path}/${id}`)
         .set("x-auth-token", token)
         .send({ name: updatedName });
     };
@@ -208,7 +209,7 @@ describe("/api/brands", () => {
 
     const exec = () => {
       return request(server)
-        .delete(`/api/brands/${id}`)
+        .delete(`${path}/${id}`)
         .set("x-auth-token", token)
         .send();
     };
