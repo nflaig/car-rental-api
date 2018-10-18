@@ -1,6 +1,6 @@
 const request = require("supertest");
-const { Brand } = require("../../models/brand");
-const { User } = require("../../models/user");
+const { Brand } = require("../../../models/brand");
+const { User } = require("../../../models/user");
 
 describe("auth middleware", () => {
   let server;
@@ -14,7 +14,7 @@ describe("auth middleware", () => {
   };
 
   beforeEach(() => {
-    server = require("../../index");
+    server = require("../../../index");
     token = new User({ isAdmin: true }).generateAuthToken();
   });
 

@@ -1,14 +1,14 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { Brand } = require("../../models/brand");
-const { User } = require("../../models/user");
+const { Brand } = require("../../../models/brand");
+const { User } = require("../../../models/user");
 
 describe("/api/brands", () => {
   const path = "/api/brands";
   let server;
 
   beforeEach(() => {
-    server = require("../../index");
+    server = require("../../../index");
   });
 
   afterEach(async () => {
