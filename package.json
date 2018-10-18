@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "jest": "^23.6.0",
+    "jest-mock-express": "^0.1.1",
     "morgan": "^1.9.1",
     "supertest": "^3.3.0"
   }
