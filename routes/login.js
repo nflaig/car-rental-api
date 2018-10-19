@@ -5,12 +5,14 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
+const invalidError = "Invalid email or password.";
+
 router.post("/", validateReqBody(validate), async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Invalid email or password.");
+  if (!user) return res.status(400).send(invalidError);
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
-  if (!validPassword) return res.status(400).send("Invalid email or password.");
+  if (!validPassword) return res.status(400).send(invalidError);
 
   const token = user.generateAuthToken();
 

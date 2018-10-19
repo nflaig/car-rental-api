@@ -6,6 +6,8 @@ const validateReqBody = require("../middleware/validateReqBody");
 const express = require("express");
 const router = express.Router();
 
+const notFoundError = "Type with given ID does not exist.";
+
 router.get("/", async (req, res) => {
   const types = await Type.find().sort("name");
   res.send(types);
@@ -14,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", validateObjectId, async (req, res) => {
   const type = await Type.findById(req.params.id);
 
-  if (!type) return res.status(404).send("Type with given ID does not exist.");
+  if (!type) return res.status(404).send(notFoundError);
 
   res.send(type);
 });
@@ -36,8 +38,7 @@ router.put(
       { new: true }
     );
 
-    if (!type)
-      return res.status(404).send("Type with given ID does not exist.");
+    if (!type) return res.status(404).send(notFoundError);
 
     res.send(type);
   }
@@ -46,7 +47,7 @@ router.put(
 router.delete("/:id", [auth, admin, validateObjectId], async (req, res) => {
   const type = await Type.findByIdAndRemove(req.params.id);
 
-  if (!type) return res.status(404).send("Type with given ID does not exist.");
+  if (!type) return res.status(404).send(notFoundError);
 
   res.send(type);
 });

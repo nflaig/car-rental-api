@@ -6,6 +6,8 @@ const validateReqBody = require("../middleware/validateReqBody");
 const express = require("express");
 const router = express.Router();
 
+const notFoundError = "Brand with given ID does not exist.";
+
 router.get("/", async (req, res) => {
   const brands = await Brand.find().sort("name");
   res.send(brands);
@@ -14,8 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", validateObjectId, async (req, res) => {
   const brand = await Brand.findById(req.params.id);
 
-  if (!brand)
-    return res.status(404).send("Brand with given ID does not exist.");
+  if (!brand) return res.status(404).send(notFoundError);
 
   res.send(brand);
 });
@@ -37,8 +38,7 @@ router.put(
       { new: true }
     );
 
-    if (!brand)
-      return res.status(404).send("Brand with given ID does not exist.");
+    if (!brand) return res.status(404).send(notFoundError);
 
     res.send(brand);
   }
@@ -47,8 +47,7 @@ router.put(
 router.delete("/:id", [auth, admin, validateObjectId], async (req, res) => {
   const brand = await Brand.findByIdAndRemove(req.params.id);
 
-  if (!brand)
-    return res.status(404).send("Brand with given ID does not exist.");
+  if (!brand) return res.status(404).send(notFoundError);
 
   res.send(brand);
 });
