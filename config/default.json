@@ -1,4 +1,4 @@
 {
-  "JWT_PRIVATE_KEY": "",
+  "JWT_PRIVATE_KEY": "default",
   "DB_CONN": "mongodb://localhost/car-rental"
 }
