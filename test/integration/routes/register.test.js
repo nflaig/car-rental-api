@@ -100,7 +100,7 @@ describe("/api/register", () => {
     });
 
     it("should return 400 if user password has more than 255 characters", async () => {
-      name = new Array(257).join("a");
+      password = new Array(257).join("a");
       const res = await exec();
 
       expect(res.status).toBe(400);
